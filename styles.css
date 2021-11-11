@@ -26,6 +26,7 @@ main{
     flex-direction: column;
     /* align-items: stretch */
     /* padding: 1%; */
+    max-width: 500px;
 }
 .button-layout{
     display: flex;
