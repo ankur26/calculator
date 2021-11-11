@@ -12,8 +12,6 @@ const operate = (a,b,operator) => {
             return divide(a,b);
         case "*":
             return multiply(a,b);
-        case "=":
-            return "To be worked on";
         default:
             return "Ideally to be not reached.";
             break;
@@ -42,6 +40,10 @@ const clickHandler=(e)=>{
         if(e.target.value === "r") reset();
         else{
             let currentValue = currentAction.textContent.includes(".")? currentAction.textContent * 1.0 : parseInt(currentAction.textContent);
+            if (!currentValue) {
+                incompleteAnswer.textContent = "ERROR! RESET";
+                return;
+            } 
             if (incompleteAnswer.textContent === ""){
                 incompleteAnswer.textContent = currentValue;
 
