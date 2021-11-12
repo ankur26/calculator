@@ -18,32 +18,66 @@ const operate = (a,b,operator) => {
     }
 }
 const numbers = "1234567890.";
-const operators = "+/*-r";
+const operators = "+/*-=br";
+let warningFlag = false;
 let calculationStack = "";
+let operatorsDisabled = false;
 const incompleteAnswer = document.getElementById("incomplete-answer");
 const currentAction = document.getElementById("current-action");
 const operation = document.getElementById("operation");
 const buttons = document.querySelectorAll("button");
+const warning = document.getElementById("warning");
+const disableNumbersAndWarn = () =>{
+    buttons.forEach(button =>{
+        if(numbers.includes(`${button.value}`)){
+            button.classList.toggle("disabled")
+        }
+    });
+    warning.classList.toggle("invisible");
+    warningFlag = true;
+}
+const disableOperators = () => {
+    buttons.forEach(button =>{
+        if(operators.includes(`${button.value}`)){
+            button.classList.toggle("disabled")
+        }
+    });
+    operatorsDisabled = true;
+}
 const reset = () => {
     incompleteAnswer.textContent = "";
     currentAction.textContent = "";
     operation.textContent = "";
     calculationStack = "";
+    if(warningFlag){
+        disableNumbersAndWarn();
+        warningFlag = false;
+    }
+    disableOperators();
 }
 
 const clickHandler=(e)=>{
     // console.log(e.target)
     if(numbers.includes(e.target.value)){
         currentAction.textContent+=e.target.value;
+        if(currentAction.textContent.length > 0 && operatorsDisabled){disableOperators();operatorsDisabled = false};
+        if(currentAction.textContent.length > 20 && !warningFlag){
+            // currentAction.textContent = "Char limit reached";
+            disableNumbersAndWarn();
+        }
+        
     }
     else if(operators.includes(e.target.value)){
         if(e.target.value === "r") reset();
+        else if(e.target.value === "b") {
+            currentAction.textContent = currentAction.textContent.substr(0,currentAction.textContent.length-1);
+            if(warningFlag){
+                disableNumbersAndWarn();
+                warningFlag = false;
+            }
+        }
         else{
-            let currentValue = currentAction.textContent.includes(".")? currentAction.textContent * 1.0 : parseInt(currentAction.textContent);
-            if (!currentValue) {
-                incompleteAnswer.textContent = "ERROR! RESET";
-                return;
-            } 
+            let currentValue = currentAction.textContent.includes(".")? currentAction.textContent * 1.0 : parseInt(currentAction.textContent)
             if (incompleteAnswer.textContent === ""){
                 incompleteAnswer.textContent = currentValue;
 
@@ -55,6 +89,7 @@ const clickHandler=(e)=>{
             calculationStack=e.target.value;
             operation.textContent = calculationStack;
         }
+        if(currentAction.textContent.length === 0){disableOperators();};
     }
 }
 

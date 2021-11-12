@@ -16,7 +16,8 @@
     <header>
         <h1 class="text-light m-0 text-center">Calculator - Work in Progress</h1>
     </header>
-    <main>
+    <main class="d-flex flex-column">
+        <div id="warning" class="row text-warning my-5 invisible">Woah, too many characters in. Disabling numbers, either back off or clear.</div>
         <div class="calculator-layout">
             <div class="answer-area">
                 <div class="text-light fs-5" id="incomplete-answer">123123</div>
@@ -47,6 +48,10 @@
                     <button class="btn btn-outline-light" value="0" id="0">0</button>
                     <button class="btn btn-outline-light" value="." id="dot">.</button>
                     <button class="btn btn-outline-light" value="/" id="divide">/</button>
+                </div>
+                <div>
+                    <button class="btn btn-outline-light" value="=" id="equals">=</button>
+                    <button class="btn btn-outline-light" value="b" id="backspace">Back</button>
                 </div>
             </div>
         </div>
