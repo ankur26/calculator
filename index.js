@@ -5,7 +5,12 @@ const subtract = (a, b) => {
 	return a - b;
 };
 const divide = (a, b) => {
-	return a / b;
+    if(b===0){
+        setTimeout(reset,5000);
+        return "You did something wrong,resetting in 5 seconds";
+    }
+    return a/b;
+	
 };
 const multiply = (a, b) => {
 	return a * b;
