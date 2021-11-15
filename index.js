@@ -84,7 +84,7 @@ const checkNumbers = () => {
 };
 const clickHandler = (e) => {
     if(equalsClicked){equalsClicked=false;reset();}
-	let current = e.target.value;
+	let current = e;
 	if (numbers.includes(current)) {
 		secondNumber.textContent += current;
 		if (secondNumber.textContent.length > 20) {
@@ -151,9 +151,17 @@ const reset = () => {
 };
 
 buttons.forEach((button) => {
-	button.addEventListener('click', clickHandler);
+	button.addEventListener('click', (e)=>{clickHandler(e.target.value)});
 });
 
+window.addEventListener('keydown',(e)=>{
+    if(e.key === "Backspace"){
+        clickHandler("b");
+    }else{
+        if(e.key==="b")return;
+        else(clickHandler(e.key));
+    }
+})
 // buttons.forEach(button=>{button.addEventListener('click',clickHandler)});
 
 reset();
